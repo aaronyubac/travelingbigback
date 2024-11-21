@@ -1,5 +1,5 @@
 import { describe, test, it, expect } from "vitest"
-import { Trie } from "/trie.js"
+import { Trie } from "/src/trie.js"
 
 describe("predictWord", () => {
 
