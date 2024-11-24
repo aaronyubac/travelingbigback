@@ -1,0 +1,29 @@
+.tour-search-container {
+    width: 70%;
+}
+
+.tour-form {
+    width: 100%;
+    border: 2px solid;
+    border-radius: 30px;
+    padding: 2px;
+    display: flex;
+}
+
+.search-input {
+    height: 30px;
+    border: none;
+    border-radius: 30px;
+    text-align:center;
+    flex-grow: 9;
+}
+
+.tour-submit-btn {
+    flex-grow: 1;
+}
+
+.search-options-container {
+    background-color: lightgray;
+    height: 200px;
+    overflow-y: scroll;
+}
