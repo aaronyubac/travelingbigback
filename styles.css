@@ -1,29 +1,59 @@
 .tour-search-container {
-    width: 70%;
+    width: 50%;
 }
 
 .tour-form {
     width: 100%;
     border: 2px solid;
     border-radius: 30px;
-    padding: 2px;
     display: flex;
 }
 
-.search-input {
-    height: 30px;
-    border: none;
-    border-radius: 30px;
-    text-align:center;
-    flex-grow: 9;
+.tour-form-selected {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
 }
 
-.tour-submit-btn {
+.search-input {
+    border: none;
+    border-radius: 30px;
+    margin-left: 3px;
+    text-align:center;
     flex-grow: 1;
 }
 
+.search-input:focus {
+    outline: none;
+}
+
+.tour-submit-btn {
+    width: 50px;
+    height: 50px;
+    padding-right: 10px;
+}
+
 .search-options-container {
-    background-color: lightgray;
     height: 200px;
+    width: 100%;
+    border: grey solid 2px;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
     overflow-y: scroll;
+    display: none;
+}
+
+.search-options {
+    padding: 0;
+    margin: 0;
+}
+
+.search-options .search-option {
+    list-style-type: none;
+    padding: 3px 8px;
+    margin: 2px 0;
+}
+
+.search-options .search-option:hover {
+    background-color: lightgray;
+    cursor: pointer;
 }
