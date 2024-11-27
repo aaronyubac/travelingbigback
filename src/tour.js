@@ -9,11 +9,11 @@ async function buildTour(query) {
         
         // Get nearby locations(nodes)
         const places = await nearbySearch(userCoords.latitude, userCoords.longitude, query);
-        
+
         // Get durations(edges - { destination, duration })
         const durations = await getDurations(userCoords.latitude, userCoords.longitude, places);
         const durationAdjacencyList = createAdjacencyList(durations);
-        
+
         const tourQueue = buildRoute(places, durationAdjacencyList);
 
         return tourQueue;
@@ -57,7 +57,7 @@ function getUserLocation() {
 
 async function nearbySearch(lat, long, query) {
 
-        const { Place } = await google.maps.importLibrary(
+        const { Place, SearchNearbyRankPreference } = await google.maps.importLibrary(
             "places",
       );
 
@@ -66,16 +66,18 @@ async function nearbySearch(lat, long, query) {
           let center = new google.maps.LatLng(lat, long);
           
           const fields = ["displayName", "location", "formattedAddress", "id"];
+          const radius =  50 * 1000; // units: km
           const maxResultCount = 5;
           
           const request = {
               fields: fields,
               locationRestriction: {
                   center: center,
-                  radius: 1000,
+                  radius: radius,
                 },
                 includedPrimaryTypes: [query],
                 maxResultCount: maxResultCount,
+                rankPreference: SearchNearbyRankPreference.DISTANCE,
         };
         
         return request;
@@ -164,7 +166,6 @@ function buildRoute(places, durationAdjacencyList) {
         }
 
         let currentNode = Object.keys(durationAdjacencyList)[0];
-        console.log("currentNode: " + currentNode);
 
         while(true) {
             visited.add(currentNode);
@@ -184,28 +185,34 @@ function buildRoute(places, durationAdjacencyList) {
                     minimum = edge;
                     continue;
                 }
-
+                
                 if(edge.duration.value < minimum.duration.value) {
                     minimum = edge;
                 }
             }
 
-            console.log("minimum: " + JSON.stringify(minimum));
-
             // no more nodes left
             if(minimum === undefined) {
                 break;
             } else {
-                // add place to queue
-                const place = placeMap.get(minimum.destination);
-                tourQueue.enqueue(place);
-
+                
                 // go to nearest place
                 currentNode = minimum.destination;
+
+                // address discrepency due to api
+                if(placeMap.get(minimum.destination) === undefined) {
+                    continue; // skip undefined place
+                } else {
+                    // add place to tourQueue
+                    const place = placeMap.get(minimum.destination);
+                    tourQueue.enqueue(place);
+
+                }
+
+
             }
-
         }
-
+        
         return tourQueue;
 }
 

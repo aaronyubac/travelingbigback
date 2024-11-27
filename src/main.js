@@ -91,7 +91,7 @@ async function submitTour(e) {
     query = query.split(' ').join('_'); 
 
     const tourQueue = await buildTour(query);
-    
-    console.log("From main(): " + JSON.stringify(tourQueue.peek().place));
+
+    console.log("Next Stop: " + JSON.stringify(tourQueue.peek().place));
 }
 
