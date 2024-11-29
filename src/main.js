@@ -38,7 +38,6 @@ document.addEventListener("click", closeSearchOptions);
 function updatePredictionList() {
 
     const setSearchInput = function(e) {
-        console.log(e.target.textContent);
         searchInput.value = e.target.textContent;
         updatePredictionList();
     }
@@ -77,10 +76,16 @@ function closeSearchOptions(e) {
 // FRONT-END VALIDATION
 
 
+let tourQueue;
+
 // TOUR SUBMISSION
-tourForm.addEventListener("submit", function(e) {
-    submitTour(e);
+tourForm.addEventListener("submit", async function(e) {
+    tourQueue = await submitTour(e);
+    // add <query, tourQueue> to history
+
+    updateSelectedTour(tourQueue);
 })
+
 
 async function submitTour(e) {
     // Prevent form submission
@@ -91,7 +96,35 @@ async function submitTour(e) {
     query = query.split(' ').join('_'); 
 
     const tourQueue = await buildTour(query);
-
-    console.log("Next Stop: " + JSON.stringify(tourQueue.peek().place));
+    
+    return tourQueue;
 }
 
+const nextStopContainer = document.querySelector(".next-stop-container");
+
+function updateSelectedTour(tourQueue) {
+
+    nextStopContainer.style.display = "block";
+    
+    const nextStop = tourQueue.peek().place;
+
+    // display name
+    const nextStopDisplayName = document.querySelector(".next-stop-container .display-name");
+    nextStopDisplayName.textContent = nextStop.displayName;
+
+    // display name
+    const nextStopAddress = document.querySelector(".next-stop-container .address");
+    nextStopAddress.textContent = nextStop.formattedAddress;
+
+    // overview link
+    const url = `https://www.google.com/maps/search/?api=1&query=Google&query_place_id=${nextStop.id}`;
+
+    const nextStopOverviewLink = document.querySelector(".next-stop-container .overview-link");
+    nextStopOverviewLink.href = url;
+
+
+    // add elements to container
+    // nextStopContainer.append(nextStopDisplayName);
+    // nextStopContainer.append(nextStopAddress);
+    // nextStopContainer.append(nextStopOverviewLink);
+}
