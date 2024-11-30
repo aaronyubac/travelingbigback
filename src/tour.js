@@ -87,7 +87,7 @@ async function nearbySearch(lat, long, query) {
     
     const request = buildRequest(lat, long, query);
     const { places } = await Place.searchNearby(request);
-
+    
     return places;
 }
 
@@ -250,7 +250,7 @@ class TourQueue {
 
     dequeue() {
 
-        const dequeued = this.front;
+        const dequeued = this.front.place;
 
         // case: one item in queue
         if(this.front === this.back) {

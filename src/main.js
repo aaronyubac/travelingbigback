@@ -1,6 +1,7 @@
 "use strict"
 import { Trie } from "/src/trie.js"
 import { buildTour } from "/src/tour.js"
+import { List } from "/src/list.js"
 
 
 // SEARCHBAR SETUP
@@ -34,7 +35,7 @@ document.addEventListener("click", closeSearchOptions);
 
 
 
-
+// SEARCH BAR WORD PREDICTION
 function updatePredictionList() {
 
     const setSearchInput = function(e) {
@@ -77,10 +78,12 @@ function closeSearchOptions(e) {
 
 
 let tourQueue;
+let visited;
 
 // TOUR SUBMISSION
 tourForm.addEventListener("submit", async function(e) {
     tourQueue = await submitTour(e);
+    visited = new List();
     // add <query, tourQueue> to history
 
     updateNextStop(tourQueue);
@@ -133,14 +136,15 @@ function updateNextStop(tourQueue) {
 
 }
 
+
+// VISITED
 const arrivalBtn = document.querySelector(".arrival-btn");
 
 arrivalBtn.addEventListener("click", dequeueStop);
 
 function dequeueStop() {
     const dequeued = tourQueue.dequeue();
-
-    // dequeue to list
+    visited.append(dequeued);
 
     updateNextStop(tourQueue);
 }
