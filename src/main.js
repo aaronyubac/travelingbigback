@@ -83,7 +83,7 @@ tourForm.addEventListener("submit", async function(e) {
     tourQueue = await submitTour(e);
     // add <query, tourQueue> to history
 
-    updateSelectedTour(tourQueue);
+    updateNextStop(tourQueue);
 })
 
 
@@ -101,18 +101,27 @@ async function submitTour(e) {
 }
 
 const nextStopContainer = document.querySelector(".next-stop-container");
+const tourComplete = document.querySelector(".tour-complete");
 
-function updateSelectedTour(tourQueue) {
+function updateNextStop(tourQueue) {
 
     nextStopContainer.style.display = "block";
+    tourComplete.style.display = "none";
     
+    if(tourQueue.peek() === null) {
+        nextStopContainer.style.display = "none";
+        tourComplete.style.display = "block";
+
+        return;
+    }
+
     const nextStop = tourQueue.peek().place;
 
     // display name
     const nextStopDisplayName = document.querySelector(".next-stop-container .display-name");
     nextStopDisplayName.textContent = nextStop.displayName;
 
-    // display name
+    // address
     const nextStopAddress = document.querySelector(".next-stop-container .address");
     nextStopAddress.textContent = nextStop.formattedAddress;
 
@@ -122,9 +131,16 @@ function updateSelectedTour(tourQueue) {
     const nextStopOverviewLink = document.querySelector(".next-stop-container .overview-link");
     nextStopOverviewLink.href = url;
 
+}
 
-    // add elements to container
-    // nextStopContainer.append(nextStopDisplayName);
-    // nextStopContainer.append(nextStopAddress);
-    // nextStopContainer.append(nextStopOverviewLink);
+const arrivalBtn = document.querySelector(".arrival-btn");
+
+arrivalBtn.addEventListener("click", dequeueStop);
+
+function dequeueStop() {
+    const dequeued = tourQueue.dequeue();
+
+    // dequeue to list
+
+    updateNextStop(tourQueue);
 }

@@ -261,7 +261,7 @@ class TourQueue {
         }
 
         // regular case
-        next = this.front.next;
+        const next = this.front.next;
 
         // remove pointers
         this.front.next = null;
