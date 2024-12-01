@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Traveling Big Back</title>
 
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles/styles.css">
 
     <script async src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&loading=async"></script>   
 
@@ -16,7 +16,7 @@
 
         <form class="tour-form">
             <input type="text" class="search-input">
-            <input type="image" class="tour-submit-btn" src="tour-bus-silhouette-by-Vexels.svg" border="0" alt="Take a tour" />
+            <input type="image" class="tour-submit-btn" src="images/tour-bus-silhouette-by-Vexels.svg" border="0" alt="Take a tour" />
         </form>
 
         <div class="search-options-container">
@@ -44,11 +44,20 @@
             <button class="arrival-btn">I'm here</button>
         </div>
     </div>
-
+    
     <div class="tour-complete">
         <h2>You completed your tour!</h2>
     </div>
     
+
+    <div class="visited-container">
+        <input class="arrow visited-prev" type="image" src="images/icons8-back-30.png">
+        <div class="visited-info">
+            <h2 class="display-name"></h2>
+            <a class="review-link" target="_blank" rel="noopener noreferrer">Review</a>
+        </div>
+        <input class="arrow visited-next" type="image" src="images/icons8-forward-30.png">
+    </div>
 
     
 

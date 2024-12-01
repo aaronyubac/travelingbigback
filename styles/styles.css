@@ -116,3 +116,46 @@ html {
     letter-spacing: 1px;
     cursor: pointer;
 }
+
+.visited-container {
+    display: none;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #fff;
+    width: 400px;
+    height: 125px;
+    border-radius: 30px;
+}
+
+.arrow {
+    height: 30px;
+    width: 30px;
+}
+
+.visited-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 10px;
+   
+}
+
+.review-link {
+    display: flex;
+    height: 30px;
+    width: 150px;
+    border-radius: 4px;
+    background-color: #9365ff;
+    color: #fff;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    letter-spacing: 1px;
+}
+
+.review-link:hover {
+    background-color: #a984ff;
+}
+

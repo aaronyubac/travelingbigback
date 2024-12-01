@@ -13,6 +13,7 @@ class List {
     constructor() {
         this.head = null;
         this.tail = null;
+        this.current = null;
     }
 
     append(place) {
@@ -29,6 +30,10 @@ class List {
 
             this.tail = newNode;
         }
+    }
+
+    isEmpty() {
+        return this.head === null;
     }
 
     print() {

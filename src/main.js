@@ -87,6 +87,7 @@ tourForm.addEventListener("submit", async function(e) {
     // add <query, tourQueue> to history
 
     updateNextStop(tourQueue);
+    updateVisited(null);
 })
 
 
@@ -139,12 +140,52 @@ function updateNextStop(tourQueue) {
 
 // VISITED
 const arrivalBtn = document.querySelector(".arrival-btn");
+const visitedContainer = document.querySelector(".visited-container");
 
 arrivalBtn.addEventListener("click", dequeueStop);
 
 function dequeueStop() {
     const dequeued = tourQueue.dequeue();
     visited.append(dequeued);
-
+    
+    updateVisited(visited.tail);
     updateNextStop(tourQueue);
 }
+
+function updateVisited(node) {
+    
+    if (visited.isEmpty()) {
+        visitedContainer.style.display = "none";
+    } else {
+        visitedContainer.style.display = "flex";
+        
+        visited.current = node;
+        
+        const current = visited.current.place;
+        
+        // display name
+        const visitedDisplayName = document.querySelector(".visited-container .visited-info .display-name");
+        visitedDisplayName.textContent = current.displayName;
+        
+        // review link
+        const url = `https://search.google.com/local/writereview?placeid=${current.id}`;
+        const nextStopOverviewLink = document.querySelector(".visited-container .visited-info .review-link");
+        nextStopOverviewLink.href = url;
+    }
+}
+
+// visited arrow functions
+const visitedPrev = document.querySelector(".visited-prev");
+const visitedNext = document.querySelector(".visited-next");
+
+visitedPrev.addEventListener("click", () => {
+    if (visited.current.prev !== null) {
+        updateVisited(visited.current.prev);
+    }
+});
+
+visitedNext.addEventListener("click", () => {
+    if (visited.current.next !== null) {
+        updateVisited(visited.current.next)
+    }
+});
