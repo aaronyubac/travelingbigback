@@ -79,12 +79,12 @@ function closeSearchOptions(e) {
 
 let tourQueue;
 let visited;
+const history = new Map();
 
 // TOUR SUBMISSION
 tourForm.addEventListener("submit", async function(e) {
     tourQueue = await submitTour(e);
     visited = new List();
-    // add <query, tourQueue> to history
 
     updateNextStop(tourQueue);
     updateVisited(null);
@@ -94,12 +94,15 @@ tourForm.addEventListener("submit", async function(e) {
 async function submitTour(e) {
     // Prevent form submission
     e.preventDefault();
-
+    
     // replace form.value's spaces with underscores
-    let query = searchInput.value.trim();
-    query = query.split(' ').join('_'); 
+    const query = searchInput.value.trim();
+    const queryFormatted = query.split(' ').join('_'); 
+    
+    const tourQueue = await buildTour(queryFormatted);
+    const tourQueueCopy = cloneQueue(tourQueue);
 
-    const tourQueue = await buildTour(query);
+    history.set(query, tourQueueCopy);
     
     return tourQueue;
 }
@@ -189,3 +192,16 @@ visitedNext.addEventListener("click", () => {
         updateVisited(visited.current.next)
     }
 });
+
+
+function cloneQueue(tourQueue) {
+
+    const copy = structuredClone(tourQueue);
+
+    copy.enqueue = tourQueue.enqueue;
+    copy.dequeue = tourQueue.dequeue;
+    copy.peek = tourQueue.peek;
+    copy.print = tourQueue.print;
+
+    return copy;
+}
