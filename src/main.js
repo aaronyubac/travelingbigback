@@ -100,9 +100,10 @@ async function submitTour(e) {
     const queryFormatted = query.split(' ').join('_'); 
     
     const tourQueue = await buildTour(queryFormatted);
-    const tourQueueCopy = cloneQueue(tourQueue);
+    const historyQueue = cloneQueue(tourQueue);
 
-    history.set(query, tourQueueCopy);
+    history.set(query, historyQueue);
+    updateHistory();
     
     return tourQueue;
 }
@@ -193,15 +194,60 @@ visitedNext.addEventListener("click", () => {
     }
 });
 
+const historyContainer = document.querySelector(".history-container");
+
+function updateHistory() {
+
+    historyContainer.innerHTML = "";
+
+    history.forEach((historyQueue, query) => {
+        
+        const historyItem = document.createElement("p");
+        historyItem.textContent = query;
+        historyItem.className = "history-item";
+        
+        historyItem.addEventListener("click", () => {
+            const copy = cloneQueue(historyQueue);
+
+            tourQueue = copy;
+            visited = new List();
+
+            updateNextStop(copy);
+            updateVisited(null);
+            updateHistory();
+        }
+    );
+    
+    historyContainer.append(historyItem);
+});
+
+}
 
 function cloneQueue(tourQueue) {
-
+    // save functions
+    const enqueue = tourQueue.enqueue;
+    const dequeue = tourQueue.dequeue;
+    const peek = tourQueue.peek;
+    const print = tourQueue.print;
+    
+    // remove functions so structuredClone() doesn't throw an error
+    for (const key in tourQueue) {
+        if(typeof tourQueue[key] === "function") {
+            delete tourQueue[key];
+        }
+    }
+    
     const copy = structuredClone(tourQueue);
+    copy.enqueue = enqueue;
+    copy.dequeue = dequeue;
+    copy.peek = peek;
+    copy.print = print;
 
-    copy.enqueue = tourQueue.enqueue;
-    copy.dequeue = tourQueue.dequeue;
-    copy.peek = tourQueue.peek;
-    copy.print = tourQueue.print;
+    // put back functions
+    tourQueue.enqueue = enqueue;
+    tourQueue.dequeue = dequeue;
+    tourQueue.peek = peek;
+    tourQueue.print = print;
 
     return copy;
 }

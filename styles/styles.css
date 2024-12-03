@@ -7,6 +7,16 @@ html {
     background-color: #EAE8FF;
 }
 
+.history-container {
+    background-color: red;
+    height: 200px;
+    width: 200px;
+}
+
+.history-item:hover {
+    cursor: pointer;
+}
+
 .tour-search-container {
     width: 50%;
 }
