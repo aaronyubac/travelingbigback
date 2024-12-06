@@ -3,7 +3,6 @@ import { Trie } from "/src/trie.js"
 import { buildTour } from "/src/tour.js"
 import { List } from "/src/list.js"
 
-
 // SEARCHBAR SETUP
 const trie = new Trie();
 
@@ -102,7 +101,7 @@ async function submitTour(e) {
     const queryFormatted = query.split(' ').join('_'); 
     
     const tourQueue = await buildTour(queryFormatted);
-    const historyQueue = cloneQueue(tourQueue);
+    const historyQueue = _.cloneDeep(tourQueue);
 
     const formattedTourDisplay = query.charAt(0).toUpperCase() + query.slice(1);
 
@@ -223,7 +222,7 @@ function updateHistory() {
         historyItem.className = "history-item";
         
         historyItem.addEventListener("click", () => {
-            const copy = cloneQueue(historyQueue);
+            const copy = _.cloneDeep(historyQueue);
 
             tourQueue = copy;
             visited = new List();
@@ -241,33 +240,4 @@ function updateHistory() {
     historyContent.append(historyItem);
 });
 
-}
-
-function cloneQueue(tourQueue) {
-    // save functions
-    const enqueue = tourQueue.enqueue;
-    const dequeue = tourQueue.dequeue;
-    const peek = tourQueue.peek;
-    const print = tourQueue.print;
-    
-    // remove functions so structuredClone() doesn't throw an error
-    for (const key in tourQueue) {
-        if(typeof tourQueue[key] === "function") {
-            delete tourQueue[key];
-        }
-    }
-    
-    const copy = structuredClone(tourQueue);
-    copy.enqueue = enqueue;
-    copy.dequeue = dequeue;
-    copy.peek = peek;
-    copy.print = print;
-
-    // put back functions
-    tourQueue.enqueue = enqueue;
-    tourQueue.dequeue = dequeue;
-    tourQueue.peek = peek;
-    tourQueue.print = print;
-
-    return copy;
 }

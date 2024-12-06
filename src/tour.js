@@ -10,8 +10,6 @@ async function buildTour(query) {
         // Get nearby locations(nodes)
         const places = await nearbySearch(userCoords.latitude, userCoords.longitude, query);
 
-        console.log(places);
-        
         // Get durations(edges - { destination, duration })
         const durations = await getDurations(userCoords.latitude, userCoords.longitude, places);
         const durationAdjacencyList = createAdjacencyList(durations);
