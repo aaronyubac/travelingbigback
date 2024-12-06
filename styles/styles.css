@@ -8,17 +8,44 @@ html {
 }
 
 .history-container {
-    background-color: red;
-    height: 200px;
+    position: relative;
+    z-index: 1;
+}
+
+.dropdown-btn {
+    height: 40px;
+    width: 40px;
+    padding: 10px;
+}
+
+.history-content {
+    display: none;
     width: 200px;
+    overflow-y: scroll;
+    position: absolute;
+    background-color: #fff;
+    border: black solid 1px;
+    border-radius: 4px;
+}
+
+.history-item {
+    padding: 4px;
 }
 
 .history-item:hover {
     cursor: pointer;
+    background-color: lightgrey;
+}
+
+.tour-selection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .tour-search-container {
     width: 50%;
+    position: relative;
 }
 
 .tour-form {
@@ -61,6 +88,7 @@ html {
     border-bottom-right-radius: 30px;
     overflow-y: scroll;
     display: none;
+    position: absolute;
 }
 
 .search-options {
@@ -79,9 +107,14 @@ html {
     cursor: pointer;
 }
 
+.tour-stops {
+    display: flex;
+    justify-content: space-evenly;
+}
+
 .next-stop-container, .tour-complete{
     width: 500px;
-    height: 100px;
+    height: 125px;
     border: black solid 2px;
     border-radius: 30px;
     padding: 30px;
@@ -127,14 +160,28 @@ html {
     cursor: pointer;
 }
 
-.visited-container {
+.visited-nav {
     display: none;
     justify-content: space-around;
     align-items: center;
     background-color: #fff;
-    width: 400px;
-    height: 125px;
     border-radius: 30px;
+    width: 400px;
+    height: 150px;
+    
+}
+
+.visited-header {
+    width: 220px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.visited-header hr {
+    width: 80%;
+    border: none;
+    border-top: 3px double #333;
 }
 
 .arrow {

@@ -12,59 +12,77 @@
 </head>
 <body>
 
+    <!-- HISTORY -->
     <div class="history-container">
+        <input type="image" class="dropdown-btn" src="images/history_icon.svg"></input>
 
+        <div class="history-content">
+            <p>Nothing to see here</p>
+        </div>
     </div>
 
-    <div class="tour-search-container">
+    <div class="tour-selection">
 
-        <form class="tour-form">
-            <input type="text" class="search-input">
-            <input type="image" class="tour-submit-btn" src="images/tour-bus-silhouette-by-Vexels.svg" border="0" alt="Take a tour" />
-        </form>
-
-        <div class="search-options-container">
-            <ul class="search-options"></ul>
-        </div>
+        <h1 class="tour-name-display"></h1>
         
-    </div>
+        <!-- SEARCH BAR -->
+        <div class="tour-search-container">
+            
+            <form class="tour-form">
+                <input type="text" class="search-input">
+                <input type="image" class="tour-submit-btn" src="images/tour-bus-silhouette-by-Vexels.svg" border="0" alt="Take a tour" />
+            </form>
 
-    <br>
-
-    <div class="next-stop-container">
-        <div class="display-name-container">
-            <h2>Next Stop: </h2>
-            <h2 class="display-name"></h2>
+            <div class="search-options-container">
+                <ul class="search-options"></ul>
+            </div>
+            
         </div>
-
-        <br>
+    </div>
         
-        <p class="address"></p>
+        <br><br><br><br>
+        
+        <div class="tour-stops">
+            <!-- NEXT STOP -->
+            <div class="next-stop-container">
+                <div class="display-name-container">
+                    <h2>Next Stop: </h2>
+                    <h2 class="display-name"></h2>
+                </div>
+        
+                <br>
+        
+            <p class="address"></p>
+        
+            <br>
 
-        <br>
-
-        <div class="option-container">
-            <a class="overview-link" target="_blank" rel="noopener noreferrer">Overview</a>
-            <button class="arrival-btn">I'm here</button>
+            <div class="option-container">
+                <a class="overview-link" target="_blank" rel="noopener noreferrer">Overview</a>
+                <button class="arrival-btn">I'm here</button>
+            </div>
+            </div>
+    
+            <div class="tour-complete">
+                <h2>You completed your tour!</h2>
+            </div>
+    
+            <!-- VISITED -->
+                 <div class="visited-nav">
+                     <input class="arrow visited-prev" type="image" src="images/icons8-back-30.png">
+                     <div class="visited-info">
+                         <div class="visited-header">
+                             <h4>Visited</h4>
+                             <hr>
+                         </div>
+                         <h2 class="display-name"></h2>
+                         <a class="review-link" target="_blank" rel="noopener noreferrer">Review</a>
+                        </div>
+                        <input class="arrow visited-next" type="image" src="images/icons8-forward-30.png">
+                    </div>
         </div>
-    </div>
     
-    <div class="tour-complete">
-        <h2>You completed your tour!</h2>
-    </div>
     
-
-    <div class="visited-container">
-        <input class="arrow visited-prev" type="image" src="images/icons8-back-30.png">
-        <div class="visited-info">
-            <h2 class="display-name"></h2>
-            <a class="review-link" target="_blank" rel="noopener noreferrer">Review</a>
-        </div>
-        <input class="arrow visited-next" type="image" src="images/icons8-forward-30.png">
-    </div>
-
     
-
     
     <script type="module" src="src/main.js"></script>
     <script type="module" src="src/tour.js"></script>

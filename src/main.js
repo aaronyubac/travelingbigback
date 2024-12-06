@@ -23,6 +23,7 @@ for (const place of places) {
 }
 
 
+const tourNameDisplay = document.querySelector(".tour-name-display");
 const tourSearchContainer = document.querySelector(".tour-search-container");
 const tourForm = document.querySelector(".tour-form");
 const searchInput = document.querySelector(".search-input");
@@ -88,6 +89,7 @@ tourForm.addEventListener("submit", async function(e) {
 
     updateNextStop(tourQueue);
     updateVisited(null);
+    updateHistory();
 })
 
 
@@ -102,9 +104,12 @@ async function submitTour(e) {
     const tourQueue = await buildTour(queryFormatted);
     const historyQueue = cloneQueue(tourQueue);
 
-    history.set(query, historyQueue);
-    updateHistory();
+    const formattedTourDisplay = query.charAt(0).toUpperCase() + query.slice(1);
+
+    history.set(formattedTourDisplay, historyQueue);
     
+    tourNameDisplay.textContent = `${formattedTourDisplay} Tour`;
+
     return tourQueue;
 }
 
@@ -144,7 +149,7 @@ function updateNextStop(tourQueue) {
 
 // VISITED
 const arrivalBtn = document.querySelector(".arrival-btn");
-const visitedContainer = document.querySelector(".visited-container");
+const visitedNav = document.querySelector(".visited-nav");
 
 arrivalBtn.addEventListener("click", dequeueStop);
 
@@ -159,21 +164,21 @@ function dequeueStop() {
 function updateVisited(node) {
     
     if (visited.isEmpty()) {
-        visitedContainer.style.display = "none";
+        visitedNav.style.display = "none";
     } else {
-        visitedContainer.style.display = "flex";
+        visitedNav.style.display = "flex";
         
         visited.current = node;
         
         const current = visited.current.place;
         
         // display name
-        const visitedDisplayName = document.querySelector(".visited-container .visited-info .display-name");
+        const visitedDisplayName = document.querySelector(".visited-info .display-name");
         visitedDisplayName.textContent = current.displayName;
         
         // review link
         const url = `https://search.google.com/local/writereview?placeid=${current.id}`;
-        const nextStopOverviewLink = document.querySelector(".visited-container .visited-info .review-link");
+        const nextStopOverviewLink = document.querySelector(".visited-info .review-link");
         nextStopOverviewLink.href = url;
     }
 }
@@ -194,11 +199,22 @@ visitedNext.addEventListener("click", () => {
     }
 });
 
-const historyContainer = document.querySelector(".history-container");
+const dropdownBtn = document.querySelector(".dropdown-btn");
+const historyContent = document.querySelector(".history-content");
+
+dropdownBtn.addEventListener("click", toggleDropdown);
+
+function toggleDropdown() {
+    if (historyContent.style.display === "block") {
+        historyContent.style.display = "none";
+    } else {
+        historyContent.style.display = "block";
+    }
+}
 
 function updateHistory() {
 
-    historyContainer.innerHTML = "";
+    historyContent.innerHTML = "";
 
     history.forEach((historyQueue, query) => {
         
@@ -212,13 +228,17 @@ function updateHistory() {
             tourQueue = copy;
             visited = new List();
 
+            tourNameDisplay.textContent = `${query} Tour`;
+
             updateNextStop(copy);
             updateVisited(null);
             updateHistory();
+
+            historyContent.style.display = "none";
         }
     );
     
-    historyContainer.append(historyItem);
+    historyContent.append(historyItem);
 });
 
 }
