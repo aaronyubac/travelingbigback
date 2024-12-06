@@ -5,6 +5,7 @@
 
 html {
     background-color: #EAE8FF;
+    overflow: hidden;
 }
 
 .history-container {
@@ -216,3 +217,9 @@ html {
     background-color: #a984ff;
 }
 
+.big-back {
+    position: absolute;
+    bottom: -30px;
+    left: -10px;
+    z-index: -1;
+}
